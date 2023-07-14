@@ -1,3 +1,5 @@
+//heap sort implemented by by caden henderson
+
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
