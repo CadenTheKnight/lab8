@@ -3,20 +3,85 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 int extraMemoryAllocated;
 
-// implements heap sort
-// extraMemoryAllocated counts bytes of memory allocated
-void heapSort(int arr[], int n)
-{
+void Swap(int* arr, int x, int y){
+	int tmp = arr[x];
+	arr[x] = arr[y];
+	arr[y] = tmp;
 }
 
+void Heapify(int* arr, int n, int i){
+	int l = 2 * i + 1;
+	int r = 2 * i + 2;
+
+	int max = i;
+	
+	//if left child is larger than root
+	//then set max to the left
+	if(l < n && arr[l] > arr[max]){
+		max = l;
+	}
+
+	if(r < n && arr[r] > arr[max]){
+		max = r;
+	}
+ 
+	//if the root is not the largest
+	//then swap the largest with i
+	if(max != i){
+		Swap(arr, i, max);
+
+		//heapify the affected subtree
+		Heapify(arr, n, max);
+	}
+}
+
+void BuildMaxHeap(int* arr, int n){
+	for(int i = n/2 - 1; i >= 0; i--){
+		Heapify(arr, n, i);
+	}
+	
+}
+
+// implements heap sort
+// extraMemoryAllocated counts bytes of memory allocated
+void heapSort(int* arr, int n){
+	BuildMaxHeap(arr, n);
+	
+	/*if(n!=0){
+		Swap(arr, 0, n);
+		Heapify(arr, 0);
+		heapSort(arr, n--);
+	}*/
+
+	//heap sort?
+	//swap root with lowest leaf?
+	
+	for(int i = n - 1; i >= 0; i--){
+		Swap(arr, 0, i);
+
+		//heapify root element 
+		//to get highest element
+		//at root again
+		Heapify(arr, i, 0);
+	}
+
+}
+
+//used for mergeSort
+void merge(int* pData, int left, int mid, int right){
+
+}
 
 // implement merge sort
 // extraMemoryAllocated counts bytes of extra memory allocated
 void mergeSort(int pData[], int l, int r)
 {
+	//mergeSort(pData, l, r);
+
 }
 
 // parses input file to an integer array
