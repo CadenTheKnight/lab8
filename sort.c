@@ -51,7 +51,10 @@ void BuildMaxHeap(int* arr, int n){
 void heapSort(int* arr, int n){
 	BuildMaxHeap(arr, n);
 	
-	/*if(n!=0){
+	/*
+	//could not get the recursive call to work
+
+	if(n!=0){
 		Swap(arr, 0, n);
 		Heapify(arr, 0);
 		heapSort(arr, n--);
@@ -72,15 +75,80 @@ void heapSort(int* arr, int n){
 }
 
 //used for mergeSort
-void merge(int* pData, int left, int mid, int right){
+void merge(int pData[], int l, int m, int r){
 
+	int leftSize = m-l + 1;
+	int rightSize = r-m;
+
+	//create 2 temporary arrays
+	int* lArr = (int*)malloc(sizeof(int)*(leftSize));
+	int* rArr = (int*)malloc(sizeof(int)*(rightSize));
+
+	//fill data in left array
+	for(int i = 0; i < leftSize; i++){
+		lArr[i] = pData[l + i];
+	}
+
+	//fill data in right array
+	for(int i = 0; i < rightSize; i++){
+		rArr[i] = pData[m + 1 + i];
+	}
+
+	//counters for managing left index and right index
+	int lI, rI;
+
+	//counter for resulting array
+	int resI;
+
+	while(lI < leftSize && rI < rightSize){
+		if(lArr[lI] <= rArr[rI]){
+			pData[resI] = lArr[lI];
+
+			//increment left idx
+			lI++;
+		} else {
+			pData[resI] = rArr[rI];
+			
+			//increment right idx
+			rI++;
+		}
+
+		//increment resulting index
+		resI++;
+	}
+
+	//finish filling in items from left array
+	while(lI < leftSize){
+		pData[resI] = lArr[lI];
+		resI++;
+		lI++;
+	}
+
+	printf("FINISHED FILLING L\n");
+
+	//finish filling in items from right array
+	while(rI < rightSize){
+		pData[resI] = rArr[rI];
+		resI++;
+		rI++;
+	}
+	
+	printf("FINISHED FILLING R\n");
 }
 
 // implement merge sort
 // extraMemoryAllocated counts bytes of extra memory allocated
 void mergeSort(int pData[], int l, int r)
 {
-	//mergeSort(pData, l, r);
+	//base case
+	if(l >= r) return;
+
+	int mid = (r - l)/2;
+
+	mergeSort(pData, l, mid);
+	mergeSort(pData, mid+1, r);
+
+	merge(pData, l, mid, r);
 
 }
 
