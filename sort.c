@@ -95,10 +95,10 @@ void merge(int pData[], int l, int m, int r){
 	}
 
 	//counters for managing left index and right index
-	int lI, rI;
+	int lI = 0, rI = 0;
 
 	//counter for resulting array
-	int resI;
+	int resI = l;
 
 	while(lI < leftSize && rI < rightSize){
 		if(lArr[lI] <= rArr[rI]){
@@ -124,16 +124,12 @@ void merge(int pData[], int l, int m, int r){
 		lI++;
 	}
 
-	printf("FINISHED FILLING L\n");
-
 	//finish filling in items from right array
 	while(rI < rightSize){
 		pData[resI] = rArr[rI];
 		resI++;
 		rI++;
 	}
-	
-	printf("FINISHED FILLING R\n");
 }
 
 // implement merge sort
@@ -143,7 +139,7 @@ void mergeSort(int pData[], int l, int r)
 	//base case
 	if(l >= r) return;
 
-	int mid = (r - l)/2;
+	int mid = l + (r - l)/2;
 
 	mergeSort(pData, l, mid);
 	mergeSort(pData, mid+1, r);
